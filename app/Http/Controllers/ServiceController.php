@@ -6,7 +6,7 @@ use App\Models\Service;
 
 class ServiceController extends Controller
 {
-    public function show(Service $service)
+    public function show(string $locale, Service $service)
     {
         $service->load(['accordionSections', 'checklistItems', 'supportingImages']);
 
