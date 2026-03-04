@@ -68,22 +68,46 @@
                     </div>
 
                     {{-- Language switcher --}}
-                    <div class="lang-switcher" style="display:flex;gap:4px;align-items:center;margin-left:12px">
-                        @foreach(['az' => 'AZ', 'ru' => 'RU', 'en' => 'EN'] as $code => $label)
-                            @php
-                                try {
-                                    $params = array_merge(request()->route()->parameters(), ['locale' => $code]);
-                                    $url = route(request()->route()->getName(), $params);
-                                } catch (\Throwable $e) {
-                                    $url = '/' . $code;
-                                }
-                            @endphp
-                            <a href="{{ $url }}"
-                               style="font-size:12px;font-weight:600;padding:2px 6px;border-radius:3px;{{ $currentLocale === $code ? 'background:#c8a227;color:#fff' : 'color:#555' }}">
-                                {{ $label }}
-                            </a>
-                        @endforeach
+                    <div class="lang-switcher" style="position:relative;margin-left:12px">
+                        <button onclick="this.nextElementSibling.classList.toggle('open')"
+                                style="font-size:12px;font-weight:700;padding:4px 10px;border-radius:4px;background:#20bad1;color:#fff;border:none;cursor:pointer;display:flex;align-items:center;gap:5px">
+                            {{ strtoupper($currentLocale) }}
+                            <span style="font-size:9px">&#9660;</span>
+                        </button>
+                        <div class="lang-dropdown"
+                             style="display:none;position:absolute;top:calc(100% + 4px);right:0;background:#fff;border:1px solid #e0e0e0;border-radius:4px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.1);z-index:9999;min-width:60px">
+                            @foreach(['az' => 'AZ', 'ru' => 'RU', 'en' => 'EN'] as $code => $label)
+                                @if($code !== $currentLocale)
+                                    @php
+                                        try {
+                                            $params = array_merge(request()->route()->parameters(), ['locale' => $code]);
+                                            $url = route(request()->route()->getName(), $params);
+                                        } catch (\Throwable $e) {
+                                            $url = '/' . $code;
+                                        }
+                                    @endphp
+                                    <a href="{{ $url }}"
+                                       style="display:block;font-size:12px;font-weight:700;padding:6px 14px;color:#333;text-decoration:none;white-space:nowrap"
+                                       onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background=''">
+                                        {{ $label }}
+                                    </a>
+                                @endif
+                            @endforeach
+                        </div>
                     </div>
+                    <script>
+                        document.addEventListener('click', function(e) {
+                            var dd = document.querySelector('.lang-dropdown');
+                            if (dd && !dd.previousElementSibling.contains(e.target)) {
+                                dd.classList.remove('open');
+                            }
+                        });
+                        document.querySelector('.lang-dropdown') && (function() {
+                            var style = document.createElement('style');
+                            style.textContent = '.lang-dropdown.open{display:block!important}';
+                            document.head.appendChild(style);
+                        })();
+                    </script>
 
                     <div class="serach-button-style1">
                         <button type="button" class="search-toggler">
@@ -131,21 +155,42 @@
             <div class="menu-outer"></div>
 
             {{-- Mobile language switcher --}}
-            <div class="mobile-lang-switcher" style="display:flex;justify-content:center;gap:8px;padding:12px 0 4px">
-                @foreach(['az' => 'AZ', 'ru' => 'RU', 'en' => 'EN'] as $code => $label)
-                    @php
-                        try {
-                            $params = array_merge(request()->route()->parameters(), ['locale' => $code]);
-                            $url = route(request()->route()->getName(), $params);
-                        } catch (\Throwable $e) {
-                            $url = '/' . $code;
+            <div class="mobile-lang-switcher" style="display:flex;justify-content:center;padding:12px 0 4px">
+                <div style="position:relative;display:inline-block">
+                    <button onclick="this.nextElementSibling.classList.toggle('mob-open')"
+                            style="font-size:13px;font-weight:700;padding:5px 14px;border-radius:4px;background:#20bad1;color:#fff;border:none;cursor:pointer;display:flex;align-items:center;gap:6px">
+                        {{ strtoupper($currentLocale) }}
+                        <span style="font-size:10px">&#9660;</span>
+                    </button>
+                    <div class="mob-lang-dropdown"
+                         style="display:none;position:absolute;top:calc(100% + 4px);left:50%;transform:translateX(-50%);background:#fff;border:1px solid #e0e0e0;border-radius:4px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.15);z-index:9999;min-width:70px;text-align:center">
+                        @foreach(['az' => 'AZ', 'ru' => 'RU', 'en' => 'EN'] as $code => $label)
+                            @if($code !== $currentLocale)
+                                @php
+                                    try {
+                                        $params = array_merge(request()->route()->parameters(), ['locale' => $code]);
+                                        $url = route(request()->route()->getName(), $params);
+                                    } catch (\Throwable $e) {
+                                        $url = '/' . $code;
+                                    }
+                                @endphp
+                                <a href="{{ $url }}"
+                                   style="display:block;font-size:13px;font-weight:700;padding:7px 14px;color:#333;text-decoration:none">
+                                    {{ $label }}
+                                </a>
+                            @endif
+                        @endforeach
+                    </div>
+                </div>
+                <style>.mob-lang-dropdown.mob-open{display:block!important}</style>
+                <script>
+                    document.addEventListener('click', function(e) {
+                        var dd = document.querySelector('.mob-lang-dropdown');
+                        if (dd && !dd.previousElementSibling.contains(e.target)) {
+                            dd.classList.remove('mob-open');
                         }
-                    @endphp
-                    <a href="{{ $url }}"
-                       style="font-size:13px;font-weight:700;padding:4px 12px;border-radius:4px;text-decoration:none;{{ $currentLocale === $code ? 'background:#c8a227;color:#fff' : 'background:#f0f0f0;color:#555' }}">
-                        {{ $label }}
-                    </a>
-                @endforeach
+                    });
+                </script>
             </div>
 
             <div class="social-links">
