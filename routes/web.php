@@ -9,6 +9,12 @@ use App\Http\Controllers\VideoGalleryController;
 use App\Models\SiteSetting;
 use Illuminate\Support\Facades\Route;
 
+// Storage link helper route (run once after deployment)
+Route::get('/storage-link', function () {
+    \Illuminate\Support\Facades\Artisan::call('storage:link');
+    return 'Storage linked successfully!';
+});
+
 // Root → redirect to default locale
 Route::get('/', function () {
     $locale = SiteSetting::instance()->default_locale ?? 'az';
