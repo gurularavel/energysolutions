@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Video Qalereya - Energy Solutions')
+@section('title', __('frontend.pages.video_gallery') . ' - Energy Solutions')
 
 @section('content')
 
@@ -13,12 +13,12 @@
                 <div class="inner-content">
                     <div class="breadcrumb-menu">
                         <ul>
-                            <li><a href="{{ lroute('home') }}">Əsas səhifə</a></li>
-                            <li class="active">Video Qalereya</li>
+                            <li><a href="{{ lroute('home') }}">{{ __('frontend.nav.home') }}</a></li>
+                            <li class="active">{{ __('frontend.pages.video_gallery') }}</li>
                         </ul>
                     </div>
                     <div class="title" data-aos="fade-up" data-aos-easing="linear" data-aos-duration="1500">
-                        <h2>Video Qalereya</h2>
+                        <h2>{{ __('frontend.pages.video_gallery') }}</h2>
                     </div>
                 </div>
             </div>
@@ -31,7 +31,7 @@
 
         @if($videos->isEmpty())
             <div class="text-center py-5">
-                <p style="color:#999;font-size:16px">Video mövcud deyil.</p>
+                <p style="color:#999;font-size:16px">{{ __('frontend.common.no_video') }}</p>
             </div>
         @else
         <div class="row" id="video-grid">

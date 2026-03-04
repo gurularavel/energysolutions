@@ -11,7 +11,7 @@
                     <div class="shape-1"></div>
                     <div class="shape-2"></div>
                     <div class="top-title">
-                        <h2>Xidmətlərimizdən yararlanmaq üçün<br>formanı dolduraraq bizə ünvanlayın<br>
+                        <h2>{{ __('frontend.forms.order_title') }}<br>
                             <a href="mailto:{{ $settings->email ?? 'office@energysolutions.az' }}">{{ $settings->email ?? 'office@energysolutions.az' }}</a>
                         </h2>
                     </div>
@@ -19,7 +19,7 @@
                     <div class="shape-2"></div>
                     <div class="top-title">
                         <a class="btn-one" href="{{ $settings->order_form_pdf ? asset($settings->order_form_pdf) : asset('assets/form/orderformenergysol.pdf') }}" target="_blank">
-                            <span class="txt">Formanı yükləyin</span>
+                            <span class="txt">{{ __('frontend.buttons.download_form') }}</span>
                         </a>
                     </div>
                 </div>

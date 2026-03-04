@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Lisenziya və Sertifikatlar - Energy Solutions')
+@section('title', __('frontend.pages.certificates') . ' - Energy Solutions')
 
 @section('content')
 
@@ -13,12 +13,12 @@
                 <div class="inner-content">
                     <div class="breadcrumb-menu">
                         <ul>
-                            <li><a href="{{ lroute('home') }}">Əsas səhifə</a></li>
-                            <li class="active">Lisenziya və Sertifikatlar</li>
+                            <li><a href="{{ lroute('home') }}">{{ __('frontend.nav.home') }}</a></li>
+                            <li class="active">{{ __('frontend.pages.certificates') }}</li>
                         </ul>
                     </div>
                     <div class="title" data-aos="fade-up" data-aos-easing="linear" data-aos-duration="1500">
-                        <h2>Lisenziya və Sertifikatlar</h2>
+                        <h2>{{ __('frontend.pages.certificates') }}</h2>
                     </div>
                 </div>
             </div>

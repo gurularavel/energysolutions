@@ -6,7 +6,7 @@
                 <div class="border-box"></div>
                 <h3></h3>
             </div>
-            <h2>What They Say?</h2>
+            <h2>{{ __('frontend.sections.testimonials') }}</h2>
         </div>
         <div class="row">
             <div class="col-xl-12">

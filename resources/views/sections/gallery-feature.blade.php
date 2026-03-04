@@ -5,7 +5,7 @@
                 <div class="border-box"></div>
                 <h3></h3>
             </div>
-            <h2>QALEREYA</h2>
+            <h2>{{ Str::upper(__('frontend.sections.gallery')) }}</h2>
         </div>
         <div class="row">
             @foreach($galleryFeatures as $feature)

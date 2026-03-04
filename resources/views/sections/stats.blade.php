@@ -28,7 +28,7 @@
                     <div class="bottom-content">
                         <div class="btns-box">
                             <a class="btn-one" href="{{ lroute('certificates') }}">
-                                <span class="txt">Ətraflı<i class="icon-refresh arrow"></i></span>
+                                <span class="txt">{{ __('frontend.buttons.more') }}<i class="icon-refresh arrow"></i></span>
                             </a>
                         </div>
                     </div>

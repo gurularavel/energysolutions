@@ -12,7 +12,7 @@
                     </div>
                     @else
                     <div class="button-box">
-                        <a class="btn-one" href="#"><span class="txt">Ətraflı</span></a>
+                        <a class="btn-one" href="#"><span class="txt">{{ __('frontend.buttons.more') }}</span></a>
                     </div>
                     @endif
                 </div>

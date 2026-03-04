@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Foto Qalereya - Energy Solutions')
+@section('title', __('frontend.pages.photo_gallery') . ' - Energy Solutions')
 
 @section('content')
 
@@ -13,12 +13,12 @@
                 <div class="inner-content">
                     <div class="breadcrumb-menu">
                         <ul>
-                            <li><a href="{{ lroute('home') }}">Əsas səhifə</a></li>
-                            <li class="active">Foto Qalereya</li>
+                            <li><a href="{{ lroute('home') }}">{{ __('frontend.nav.home') }}</a></li>
+                            <li class="active">{{ __('frontend.pages.photo_gallery') }}</li>
                         </ul>
                     </div>
                     <div class="title" data-aos="fade-up" data-aos-easing="linear" data-aos-duration="1500">
-                        <h2>Foto Qalereya</h2>
+                        <h2>{{ __('frontend.pages.photo_gallery') }}</h2>
                     </div>
                 </div>
             </div>
@@ -32,7 +32,7 @@
             <ul class="filters" data-toggle="buttons">
                 <li class="btn active">
                     <input type="radio">
-                    <a href="javascript:void(0);">Hamısını göstər</a>
+                    <a href="javascript:void(0);">{{ __('frontend.buttons.show_all') }}</a>
                 </li>
                 @foreach($categories as $category)
                 <li data-filter=".{{ $category->filter_class }}" class="btn">

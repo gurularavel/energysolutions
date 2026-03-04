@@ -4,7 +4,7 @@
         <div class="sec-title text-center">
             <div class="icon"><span class="icon-heartbeat"></span></div>
             <div class="sub-title"><h3></h3></div>
-            <h2>Xəbərlər</h2>
+            <h2>{{ __('frontend.sections.news') }}</h2>
         </div>
         <div class="row">
             @foreach($blogPosts as $post)

@@ -4,7 +4,7 @@
         <div class="sec-title text-center">
             <div class="icon"><span class="flaticon-play-button"></span></div>
             <div class="sub-title"><h3></h3></div>
-            <h2>Video Qalereya</h2>
+            <h2>{{ __('frontend.sections.video_gallery') }}</h2>
         </div>
 
         <div class="row">
@@ -28,7 +28,7 @@
         </div>
 
         <div class="text-center" style="margin-top:30px">
-            <a href="{{ lroute('video-gallery') }}" class="btn-one">Bütün Videolar</a>
+            <a href="{{ lroute('video-gallery') }}" class="btn-one">{{ __('frontend.buttons.all_videos') }}</a>
         </div>
     </div>
 </section>

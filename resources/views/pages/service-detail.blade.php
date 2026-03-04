@@ -13,8 +13,8 @@
                 <div class="inner-content">
                     <div class="breadcrumb-menu">
                         <ul>
-                            <li><a href="{{ lroute('home') }}">Əsas səhifə</a></li>
-                            <li><a href="{{ lroute('home') }}#services">Xidmətlər</a></li>
+                            <li><a href="{{ lroute('home') }}">{{ __('frontend.nav.home') }}</a></li>
+                            <li><a href="{{ lroute('home') }}#services">{{ __('frontend.nav.services') }}</a></li>
                             <li class="active">{{ $service->title }}</li>
                         </ul>
                     </div>
@@ -45,7 +45,7 @@
                             @endforeach
                             <li class="{{ $service->type === 'experiment' ? 'active' : '' }}">
                                 <a href="{{ lroute('experiment.show') }}">
-                                    Səriştəlilik sınaqları <span class="icon-right-arrow"></span>
+                                    {{ __('frontend.service.experiments') }} <span class="icon-right-arrow"></span>
                                 </a>
                             </li>
                         </ul>
@@ -55,7 +55,7 @@
                         <div class="sidebar-info-box-bg"
                             style="background-image: url({{ asset('assets/images/sidebar/sidebar-info-box-bg.jpg') }});"></div>
                         <div class="icon"><span class="icon-phone-call"></span></div>
-                        <h3>Hər hansı bir<br> məsləhət üçün<br> bizimlə əlaqə saxlayın</h3>
+                        <h3>{{ __('frontend.service.contact_us') }}</h3>
                         <h2><a href="tel:{{ $settings->phone ?? '(+994 10) 225-24-78' }}">{{ $settings->phone ?? '(+994 10) 225-24-78' }}</a></h2>
                     </div>
 

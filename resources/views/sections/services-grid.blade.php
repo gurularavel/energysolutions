@@ -6,7 +6,7 @@
                 <div class="border-box"></div>
                 <h3></h3>
             </div>
-            <h2>Xidmətlərimiz</h2>
+            <h2>{{ __('frontend.sections.our_services') }}</h2>
         </div>
         <div class="row text-right-rtl">
             @foreach($services as $service)

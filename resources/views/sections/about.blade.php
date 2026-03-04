@@ -7,7 +7,7 @@
                     <div class="sec-title sec-title--style2">
                         <div class="sub-title">
                             <div class="border-box"></div>
-                            <h3>Haqqımızda</h3>
+                            <h3>{{ __('frontend.sections.about') }}</h3>
                         </div>
                     </div>
                     <div class="inner-text">
@@ -30,7 +30,7 @@
                             <div class="single-service-style1">
                                 <div class="shape-box"></div>
                                 <div class="icon-holder"><span class="icon-mobile-analytics"></span></div>
-                                <div class="title-holder"><h3><a href="{{ lroute('home') }}#services">Xidmətlər</a></h3></div>
+                                <div class="title-holder"><h3><a href="{{ lroute('home') }}#services">{{ __('frontend.about.services') }}</a></h3></div>
                             </div>
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6">
@@ -39,7 +39,7 @@
                                 <div class="icon-holder"><span class="icon-help"></span></div>
                                 <div class="title-holder">
                                     <h3>
-                                        <a href="{{ $settings->policy_pdf ? asset($settings->policy_pdf) : asset('assets/policy/Policy.pdf') }}" target="_blank">Siyasətlərimiz</a>
+                                        <a href="{{ $settings->policy_pdf ? asset($settings->policy_pdf) : asset('assets/policy/Policy.pdf') }}" target="_blank">{{ __('frontend.about.policies') }}</a>
                                     </h3>
                                 </div>
                             </div>
@@ -48,14 +48,14 @@
                             <div class="single-service-style1">
                                 <div class="shape-box"></div>
                                 <div class="icon-holder"><span class="icon-checking"></span></div>
-                                <div class="title-holder"><h3><a href="{{ lroute('certificates') }}">Lisenziya və<br> Sertifikatlar</a></h3></div>
+                                <div class="title-holder"><h3><a href="{{ lroute('certificates') }}">{{ __('frontend.about.certificates') }}</a></h3></div>
                             </div>
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6">
                             <div class="single-service-style1">
                                 <div class="shape-box"></div>
                                 <div class="icon-holder"><span class="icon-creative"></span></div>
-                                <div class="title-holder"><h3><a href="#">Layihələr</a></h3></div>
+                                <div class="title-holder"><h3><a href="#">{{ __('frontend.about.projects') }}</a></h3></div>
                             </div>
                         </div>
                     </div>
