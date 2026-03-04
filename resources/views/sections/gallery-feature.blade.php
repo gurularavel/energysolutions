@@ -30,7 +30,7 @@
                                 @endif
                             </div>
                             <div class="icon">
-                                <a href="{{ lroute('gallery') }}"><span class="icon-right-arrow"></span></a>
+                                <a href="{{ lroute($feature->link ?: 'gallery') }}"><span class="icon-right-arrow"></span></a>
                             </div>
                         </div>
                     </div>

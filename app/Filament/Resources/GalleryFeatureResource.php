@@ -37,7 +37,12 @@ class GalleryFeatureResource extends Resource
                     Forms\Components\Textarea::make('description.en')->label('Description (EN)')->columnSpanFull(),
                 ]),
             ])->columnSpanFull(),
-            Forms\Components\TextInput::make('link'),
+            Forms\Components\Select::make('link')
+                ->options([
+                    'gallery'       => 'Gallery (Foto)',
+                    'video-gallery' => 'Video Gallery',
+                ])
+                ->default('gallery'),
             Forms\Components\TextInput::make('sort_order')->numeric()->default(0),
             Forms\Components\Toggle::make('is_active')->default(true),
             SpatieMediaLibraryFileUpload::make('image')->collection('image')->image()->columnSpanFull(),
