@@ -81,60 +81,61 @@
                     </div>
 
                     @php
-                        $group1Items = $service->checklistItems->where('section_group', 'group1')->values();
-                        $group2Items = $service->checklistItems->where('section_group', 'group2')->values();
-                        $allItems = $service->checklistItems->whereNull('section_group')->values();
-                        if($allItems->isEmpty()) $allItems = $service->checklistItems->values();
+                        $groups = $service->checklistItems
+                            ->filter(fn($i) => $i->section_group)
+                            ->pluck('section_group')
+                            ->unique()
+                            ->sort()
+                            ->values();
+
+                        $ungroupedItems = $service->checklistItems
+                            ->filter(fn($i) => !$i->section_group)
+                            ->values();
+
+                        $supportingByGroup = $service->supportingImages
+                            ->groupBy('after_group');
                     @endphp
 
-                    @if($group1Items->isNotEmpty() || $allItems->isNotEmpty())
-                    <div class="case-deatils-text-box">
-                        <ul>
-                            @foreach(($group1Items->isNotEmpty() ? $group1Items : $allItems->take(ceil($allItems->count()/2))) as $item)
-                            <li>
-                                <span class="icon-check"></span> {{ $item->content }}
-                            </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    @endif
-
-                    @php $group1Images = $service->getMedia('group1_images'); @endphp
-                    @if($group1Images->isNotEmpty())
-                    <div class="row">
-                        @foreach($group1Images as $img)
-                        <div class="col-xl-6">
-                            <div class="img-box">
-                                <img src="{{ $img->getUrl() }}" alt="{{ $img->name }}" />
+                    @if($groups->isNotEmpty())
+                        @foreach($groups as $group)
+                            @php $groupItems = $service->checklistItems->where('section_group', $group)->values(); @endphp
+                            @if($groupItems->isNotEmpty())
+                            <div class="case-deatils-text-box">
+                                <ul>
+                                    @foreach($groupItems as $item)
+                                    <li>
+                                        <span class="icon-check"></span> {{ $item->content }}
+                                    </li>
+                                    @endforeach
+                                </ul>
                             </div>
-                        </div>
-                        @endforeach
-                    </div>
-                    @endif
+                            @endif
 
-                    @if($group2Items->isNotEmpty() || ($allItems->count() > ceil($allItems->count()/2)))
-                    <div class="case-deatils-text-box">
-                        <ul>
-                            @foreach(($group2Items->isNotEmpty() ? $group2Items : $allItems->skip(ceil($allItems->count()/2))) as $item)
-                            <li>
-                                <span class="icon-check"></span> {{ $item->content }}
-                            </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    @endif
-
-                    @php $group2Images = $service->getMedia('group2_images'); @endphp
-                    @if($group2Images->isNotEmpty())
-                    <div class="row">
-                        @foreach($group2Images as $img)
-                        <div class="col-xl-6">
-                            <div class="img-box">
-                                <img src="{{ $img->getUrl() }}" alt="{{ $img->name }}" />
+                            @php $groupImages = $supportingByGroup->get($group, collect()); @endphp
+                            @if($groupImages->isNotEmpty())
+                            <div class="row">
+                                @foreach($groupImages as $img)
+                                <div class="col-xl-6">
+                                    <div class="img-box">
+                                        @if($img->hasMedia('image'))
+                                            <img src="{{ $img->getFirstMediaUrl('image') }}" alt="{{ $img->alt_text }}" />
+                                        @endif
+                                    </div>
+                                </div>
+                                @endforeach
                             </div>
-                        </div>
+                            @endif
                         @endforeach
-                    </div>
+                    @elseif($ungroupedItems->isNotEmpty())
+                        <div class="case-deatils-text-box">
+                            <ul>
+                                @foreach($ungroupedItems as $item)
+                                <li>
+                                    <span class="icon-check"></span> {{ $item->content }}
+                                </li>
+                                @endforeach
+                            </ul>
+                        </div>
                     @endif
 
                     @foreach($service->accordionSections as $accordion)

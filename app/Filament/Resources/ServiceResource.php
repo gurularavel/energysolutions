@@ -68,25 +68,48 @@ class ServiceResource extends Resource
             ])->columns(3),
 
             Forms\Components\Section::make('Qruplar Arasındakı Şəkillər')
-                ->description('Şəkillər xidmət səhifəsində checklist qruplarından sonra 2-li sütun şəklində göstərilir.')
+                ->description('Hər şəkil üçün hansı qrupdan sonra görünəcəyini seçin. Drag-drop ilə sıralamaq mümkündür.')
                 ->schema([
-                    SpatieMediaLibraryFileUpload::make('group1_images')
-                        ->collection('group1_images')
-                        ->image()
-                        ->multiple()
-                        ->reorderable()
-                        ->label('Group 1-dən sonra')
-                        ->helperText('Bu şəkillər 1-ci qrup siyahısının altında görünür.')
-                        ->columnSpanFull(),
+                    Forms\Components\Repeater::make('supportingImages')
+                        ->relationship()
+                        ->schema([
+                            SpatieMediaLibraryFileUpload::make('image')
+                                ->collection('image')
+                                ->image()
+                                ->required()
+                                ->label('Şəkil')
+                                ->columnSpan(2),
 
-                    SpatieMediaLibraryFileUpload::make('group2_images')
-                        ->collection('group2_images')
-                        ->image()
-                        ->multiple()
-                        ->reorderable()
-                        ->label('Group 2-dən sonra')
-                        ->helperText('Bu şəkillər 2-ci qrup siyahısının altında görünür.')
-                        ->columnSpanFull(),
+                            Forms\Components\Select::make('after_group')
+                                ->label('Hansı qrupdan sonra?')
+                                ->options(fn (Forms\Get $get) => collect(
+                                    \App\Models\ServiceChecklistItem::query()
+                                        ->when(
+                                            request()->route('record'),
+                                            fn ($q) => $q->whereHas(
+                                                'service',
+                                                fn ($s) => $s->where('slug', request()->route('record'))
+                                            )
+                                        )
+                                        ->whereNotNull('section_group')
+                                        ->distinct()
+                                        ->pluck('section_group')
+                                )->mapWithKeys(fn ($g) => [$g => ucfirst($g)])->toArray())
+                                ->placeholder('Qrup seçin...')
+                                ->searchable()
+                                ->required(),
+
+                            Forms\Components\TextInput::make('sort_order')
+                                ->numeric()
+                                ->default(0)
+                                ->label('Sıra'),
+                        ])
+                        ->columns(4)
+                        ->orderColumn('sort_order')
+                        ->reorderable('sort_order')
+                        ->collapsible()
+                        ->itemLabel(fn (array $state): ?string => $state['after_group'] ? ucfirst($state['after_group']) . ' sonrası' : null)
+                        ->label('Şəkillər'),
                 ]),
 
             Forms\Components\Section::make('Checklist Items')->schema([

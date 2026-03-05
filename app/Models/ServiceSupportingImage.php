@@ -16,6 +16,7 @@ class ServiceSupportingImage extends Model implements HasMedia
 
     protected $fillable = [
         'service_id',
+        'after_group',
         'alt_text',
         'sort_order',
     ];

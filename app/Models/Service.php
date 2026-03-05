@@ -68,7 +68,5 @@ class Service extends Model implements HasMedia
         $this->addMediaCollection('featured_image')->singleFile();
         $this->addMediaCollection('card_image')->singleFile();
         $this->addMediaCollection('breadcrumb_image')->singleFile();
-        $this->addMediaCollection('group1_images');
-        $this->addMediaCollection('group2_images');
     }
 }
