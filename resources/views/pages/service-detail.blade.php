@@ -229,20 +229,33 @@
                         @endif
                     @endif
 
-                    @foreach($service->accordionSections as $accordion)
+                    @if($service->accordionSections->isNotEmpty())
                     <div class="service-details-faq-content">
                         <ul class="accordion-box">
-                            <li class="accordion block active-block">
-                                <div class="acc-btn">{{ $accordion->title }}</div>
-                                <div class="acc-content current">
+                            @foreach($service->accordionSections as $loop_accordion => $accordion)
+                            <li class="accordion block {{ $loop_accordion === 0 ? 'active-block' : '' }}">
+                                <div class="acc-btn {{ $loop_accordion === 0 ? 'active' : '' }}">{{ $accordion->title }}</div>
+                                <div class="acc-content" style="{{ $loop_accordion === 0 ? 'display:block;' : 'display:none;' }}">
                                     <div class="content">
                                         {!! $accordion->content !!}
                                     </div>
+                                    @if($accordion->hasMedia('accordion_images'))
+                                    <div class="row" style="margin-top:20px;">
+                                        @foreach($accordion->getMedia('accordion_images') as $img)
+                                        <div class="col-xl-6" style="margin-bottom:20px;">
+                                            <div class="img-box">
+                                                <img src="{{ $img->getUrl() }}" alt="{{ $accordion->title }}" />
+                                            </div>
+                                        </div>
+                                        @endforeach
+                                    </div>
+                                    @endif
                                 </div>
                             </li>
+                            @endforeach
                         </ul>
                     </div>
-                    @endforeach
+                    @endif
 
                 </div>
             </div>

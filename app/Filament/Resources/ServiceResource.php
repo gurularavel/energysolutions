@@ -227,6 +227,13 @@ class ServiceResource extends Resource
                                 Forms\Components\RichEditor::make('content.en')->label('Content (EN)')->columnSpanFull(),
                             ]),
                         ])->columnSpanFull(),
+                        SpatieMediaLibraryFileUpload::make('accordion_images')
+                            ->collection('accordion_images')
+                            ->image()
+                            ->multiple()
+                            ->reorderable()
+                            ->label('Şəkillər (accordion altında görünür)')
+                            ->columnSpanFull(),
                         Forms\Components\TextInput::make('sort_order')->numeric()->default(0),
                     ])
                     ->columns(2)
