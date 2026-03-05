@@ -122,8 +122,7 @@
 
                             @if($groupItems->isNotEmpty())
                                 @php
-                                    // Ardıcıl 'list' tipli itemləri qruplaşdır,
-                                    // 'text_image' olanları ayrıca render et
+
                                     $listBuffer = collect();
                                 @endphp
                                 @foreach($groupItems as $item)
@@ -247,28 +246,28 @@
                     @endif
 
                 </div>
+                @foreach($service->accordionSections as $accordion)
+                    @if($accordion->hasMedia('accordion_images'))
+                        <div class="service-details-faq-content" style="width:100%;">
+                            <ul class="accordion-box">
+                                <li class="accordion block active-block">
+                                    <div class="row">
+                                        @foreach($accordion->getMedia('accordion_images') as $img)
+                                            <div class="col-xl-6">
+                                                <div class="img-box">
+                                                    <img src="{{ $img->getUrl() }}" alt="{{ $accordion->title }}" />
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    @endif
+                @endforeach
             </div>
 
-            {{-- Accordion images: matches services6.html exact structure --}}
-            @foreach($service->accordionSections as $accordion)
-                @if($accordion->hasMedia('accordion_images'))
-                <div class="service-details-faq-content" style="width:100%;">
-                    <ul class="accordion-box">
-                        <li class="accordion block active-block">
-                            <div class="row">
-                                @foreach($accordion->getMedia('accordion_images') as $img)
-                                <div class="col-xl-6">
-                                    <div class="img-box">
-                                        <img src="{{ $img->getUrl() }}" alt="{{ $accordion->title }}" />
-                                    </div>
-                                </div>
-                                @endforeach
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                @endif
-            @endforeach
+
 
         </div>
     </div>
