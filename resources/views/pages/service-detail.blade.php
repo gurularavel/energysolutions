@@ -116,15 +116,52 @@
                             @endif
 
                             @if($groupItems->isNotEmpty())
-                            <div class="case-deatils-text-box">
-                                <ul>
-                                    @foreach($groupItems as $item)
-                                    <li>
-                                        <span class="icon-check"></span> {{ $item->content }}
-                                    </li>
-                                    @endforeach
-                                </ul>
-                            </div>
+                                @php
+                                    // Ardıcıl 'list' tipli itemləri qruplaşdır,
+                                    // 'text_image' olanları ayrıca render et
+                                    $listBuffer = collect();
+                                @endphp
+                                @foreach($groupItems as $item)
+                                    @if($item->item_type === 'text_image')
+                                        @if($listBuffer->isNotEmpty())
+                                        <div class="case-deatils-text-box">
+                                            <ul>
+                                                @foreach($listBuffer as $li)
+                                                <li><span class="icon-check"></span> {{ $li->content }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                        @php $listBuffer = collect(); @endphp
+                                        @endif
+                                        <div class="row" style="margin-bottom:30px;">
+                                            <div class="col-xl-6">
+                                                <div class="case-deatils-text-box">
+                                                    <ul>
+                                                        <li><span class="icon-check"></span> {{ $item->content }}</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-6">
+                                                @if($item->hasMedia('item_image'))
+                                                <div class="img-box">
+                                                    <img src="{{ $item->getFirstMediaUrl('item_image') }}" alt="{{ $item->content }}" />
+                                                </div>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    @else
+                                        @php $listBuffer->push($item); @endphp
+                                    @endif
+                                @endforeach
+                                @if($listBuffer->isNotEmpty())
+                                <div class="case-deatils-text-box">
+                                    <ul>
+                                        @foreach($listBuffer as $li)
+                                        <li><span class="icon-check"></span> {{ $li->content }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                                @endif
                             @endif
 
                             @php $groupImages = $supportingByGroup->get($group, collect()); @endphp
@@ -143,15 +180,48 @@
                             @endif
                         @endforeach
                     @elseif($ungroupedItems->isNotEmpty())
+                        @php $listBuffer = collect(); @endphp
+                        @foreach($ungroupedItems as $item)
+                            @if($item->item_type === 'text_image')
+                                @if($listBuffer->isNotEmpty())
+                                <div class="case-deatils-text-box">
+                                    <ul>
+                                        @foreach($listBuffer as $li)
+                                        <li><span class="icon-check"></span> {{ $li->content }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                                @php $listBuffer = collect(); @endphp
+                                @endif
+                                <div class="row" style="margin-bottom:30px;">
+                                    <div class="col-xl-6">
+                                        <div class="case-deatils-text-box">
+                                            <ul>
+                                                <li><span class="icon-check"></span> {{ $item->content }}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6">
+                                        @if($item->hasMedia('item_image'))
+                                        <div class="img-box">
+                                            <img src="{{ $item->getFirstMediaUrl('item_image') }}" alt="{{ $item->content }}" />
+                                        </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            @else
+                                @php $listBuffer->push($item); @endphp
+                            @endif
+                        @endforeach
+                        @if($listBuffer->isNotEmpty())
                         <div class="case-deatils-text-box">
                             <ul>
-                                @foreach($ungroupedItems as $item)
-                                <li>
-                                    <span class="icon-check"></span> {{ $item->content }}
-                                </li>
+                                @foreach($listBuffer as $li)
+                                <li><span class="icon-check"></span> {{ $li->content }}</li>
                                 @endforeach
                             </ul>
                         </div>
+                        @endif
                     @endif
 
                     @foreach($service->accordionSections as $accordion)

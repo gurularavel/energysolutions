@@ -165,6 +165,16 @@ class ServiceResource extends Resource
                 Forms\Components\Repeater::make('checklistItems')
                     ->relationship()
                     ->schema([
+                        Forms\Components\Select::make('item_type')
+                            ->label('Növ')
+                            ->options([
+                                'list'       => '☑ Adi siyahı (bullet)',
+                                'text_image' => '◧ Sol text + Sağ şəkil',
+                            ])
+                            ->default('list')
+                            ->required()
+                            ->live(),
+
                         Forms\Components\Tabs::make('Content Translations')->tabs([
                             Forms\Components\Tabs\Tab::make('AZ')->schema([
                                 Forms\Components\Textarea::make('content.az')->label('Content (AZ)')->required()->rows(2),
@@ -176,12 +186,24 @@ class ServiceResource extends Resource
                                 Forms\Components\Textarea::make('content.en')->label('Content (EN)')->rows(2),
                             ]),
                         ])->columnSpanFull(),
-                        Forms\Components\TextInput::make('section_group')->placeholder('group1 or group2'),
+
+                        SpatieMediaLibraryFileUpload::make('item_image')
+                            ->collection('item_image')
+                            ->image()
+                            ->label('Şəkil (sağ tərəf)')
+                            ->visible(fn (Forms\Get $get) => $get('item_type') === 'text_image')
+                            ->columnSpanFull(),
+
+                        Forms\Components\TextInput::make('section_group')->placeholder('group1, group2...'),
                         Forms\Components\TextInput::make('sort_order')->numeric()->default(0),
                     ])
                     ->columns(2)
                     ->orderColumn('sort_order')
-                    ->collapsible(),
+                    ->collapsible()
+                    ->itemLabel(fn (array $state): ?string =>
+                        ($state['item_type'] === 'text_image' ? '◧ ' : '☑ ') .
+                        (isset($state['content']['az']) ? mb_strimwidth($state['content']['az'], 0, 60, '…') : '')
+                    ),
             ]),
 
             Forms\Components\Section::make('Accordion Sections')->schema([
