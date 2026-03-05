@@ -254,7 +254,7 @@
                                     <div class="row">
                                         @foreach($accordion->getMedia('accordion_images') as $img)
                                             <div class="col-xl-6">
-                                                <div class="img-box">
+                                                <div class="img-box" style="padding: 5px">
                                                     <img src="{{ $img->getUrl() }}" alt="{{ $accordion->title }}" />
                                                 </div>
                                             </div>
