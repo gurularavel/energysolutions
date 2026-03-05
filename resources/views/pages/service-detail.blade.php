@@ -239,17 +239,6 @@
                                     <div class="content">
                                         {!! $accordion->content !!}
                                     </div>
-                                    @if($accordion->hasMedia('accordion_images'))
-                                    <div class="row" style="margin-top:20px;">
-                                        @foreach($accordion->getMedia('accordion_images') as $img)
-                                        <div class="col-xl-6" style="margin-bottom:20px;">
-                                            <div class="img-box">
-                                                <img src="{{ $img->getUrl() }}" alt="{{ $accordion->title }}" />
-                                            </div>
-                                        </div>
-                                        @endforeach
-                                    </div>
-                                    @endif
                                 </div>
                             </li>
                             @endforeach
@@ -259,6 +248,23 @@
 
                 </div>
             </div>
+
+            {{-- Accordion images: outside two-column layout, full-width (matches services6.html) --}}
+            @foreach($service->accordionSections as $accordion)
+                @if($accordion->hasMedia('accordion_images'))
+                <div class="service-details-faq-content" style="width:100%;">
+                    <div class="row">
+                        @foreach($accordion->getMedia('accordion_images') as $img)
+                        <div class="col-xl-6" style="margin-bottom:20px;">
+                            <div class="img-box">
+                                <img src="{{ $img->getUrl() }}" alt="{{ $accordion->title }}" />
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+                @endif
+            @endforeach
 
         </div>
     </div>
