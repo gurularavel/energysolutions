@@ -249,19 +249,23 @@
                 </div>
             </div>
 
-            {{-- Accordion images: outside two-column layout, full-width (matches services6.html) --}}
+            {{-- Accordion images: matches services6.html exact structure --}}
             @foreach($service->accordionSections as $accordion)
                 @if($accordion->hasMedia('accordion_images'))
-                <div class="service-details-faq-content">
-                    <div class="row">
-                        @foreach($accordion->getMedia('accordion_images') as $img)
-                        <div class="col-xl-6">
-                            <div class="img-box">
-                                <img src="{{ $img->getUrl() }}" alt="{{ $accordion->title }}" />
+                <div class="service-details-faq-content" style="width:100%;">
+                    <ul class="accordion-box">
+                        <li class="accordion block active-block">
+                            <div class="row">
+                                @foreach($accordion->getMedia('accordion_images') as $img)
+                                <div class="col-xl-6">
+                                    <div class="img-box">
+                                        <img src="{{ $img->getUrl() }}" alt="{{ $accordion->title }}" />
+                                    </div>
+                                </div>
+                                @endforeach
                             </div>
-                        </div>
-                        @endforeach
-                    </div>
+                        </li>
+                    </ul>
                 </div>
                 @endif
             @endforeach
