@@ -93,8 +93,9 @@
                             ->pluck('after_group')
                             ->unique();
 
-                        // checklist + image qruplarını birləşdir, sırala
                         $allGroups = $checklistGroups->merge($imageGroups)->unique()->sort()->values();
+
+                        $groupTitles = $service->checklistGroups->keyBy('group_key');
 
                         $ungroupedItems = $service->checklistItems
                             ->filter(fn($i) => !$i->section_group)
@@ -103,7 +104,17 @@
 
                     @if($allGroups->isNotEmpty())
                         @foreach($allGroups as $group)
-                            @php $groupItems = $service->checklistItems->where('section_group', $group)->values(); @endphp
+                            @php
+                                $groupItems = $service->checklistItems->where('section_group', $group)->values();
+                                $groupTitle = $groupTitles->get($group);
+                            @endphp
+
+                            @if($groupTitle && $groupTitle->title)
+                            <div class="text-box1">
+                                <h3>{{ $groupTitle->title }}</h3>
+                            </div>
+                            @endif
+
                             @if($groupItems->isNotEmpty())
                             <div class="case-deatils-text-box">
                                 <ul>

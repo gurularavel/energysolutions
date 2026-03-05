@@ -43,6 +43,11 @@ class Service extends Model implements HasMedia
         return $this->hasMany(ServiceChecklistItem::class)->orderBy('sort_order');
     }
 
+    public function checklistGroups(): HasMany
+    {
+        return $this->hasMany(ServiceChecklistGroup::class)->orderBy('sort_order');
+    }
+
     public function supportingImages(): HasMany
     {
         return $this->hasMany(ServiceSupportingImage::class)->orderBy('sort_order');

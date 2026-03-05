@@ -12,7 +12,7 @@ class ExperimentController extends Controller
             ->where('is_active', true)
             ->firstOrFail();
 
-        $service->load(['accordionSections', 'checklistItems', 'supportingImages']);
+        $service->load(['accordionSections', 'checklistItems', 'checklistGroups', 'supportingImages']);
 
         return view('pages.service-detail', compact('service'));
     }

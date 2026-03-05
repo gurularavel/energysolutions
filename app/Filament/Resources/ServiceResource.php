@@ -112,6 +112,55 @@ class ServiceResource extends Resource
                         ->label('Şəkillər'),
                 ]),
 
+            Forms\Components\Section::make('Qrup Başlıqları')
+                ->description('Hər qrup üçün başlıq təyin edin. Bu başlıqlar checklist siyahısının üstündə görünür.')
+                ->schema([
+                    Forms\Components\Repeater::make('checklistGroups')
+                        ->relationship()
+                        ->schema([
+                            Forms\Components\Select::make('group_key')
+                                ->label('Qrup')
+                                ->options(fn () => collect(
+                                    \App\Models\ServiceChecklistItem::query()
+                                        ->when(
+                                            request()->route('record'),
+                                            fn ($q) => $q->whereHas(
+                                                'service',
+                                                fn ($s) => $s->where('slug', request()->route('record'))
+                                            )
+                                        )
+                                        ->whereNotNull('section_group')
+                                        ->distinct()
+                                        ->pluck('section_group')
+                                )->mapWithKeys(fn ($g) => [$g => ucfirst($g)])->toArray())
+                                ->searchable()
+                                ->required(),
+
+                            Forms\Components\Tabs::make('Title')->tabs([
+                                Forms\Components\Tabs\Tab::make('AZ')->schema([
+                                    Forms\Components\TextInput::make('title.az')->label('Başlıq (AZ)'),
+                                ]),
+                                Forms\Components\Tabs\Tab::make('RU')->schema([
+                                    Forms\Components\TextInput::make('title.ru')->label('Başlıq (RU)'),
+                                ]),
+                                Forms\Components\Tabs\Tab::make('EN')->schema([
+                                    Forms\Components\TextInput::make('title.en')->label('Başlıq (EN)'),
+                                ]),
+                            ])->columnSpan(2),
+
+                            Forms\Components\TextInput::make('sort_order')
+                                ->numeric()->default(0)->label('Sıra'),
+                        ])
+                        ->columns(4)
+                        ->orderColumn('sort_order')
+                        ->reorderable('sort_order')
+                        ->collapsible()
+                        ->itemLabel(fn (array $state): ?string => isset($state['group_key'])
+                            ? ucfirst($state['group_key']) . ' — ' . ($state['title']['az'] ?? '')
+                            : null)
+                        ->label('Qrup başlıqları'),
+                ]),
+
             Forms\Components\Section::make('Checklist Items')->schema([
                 Forms\Components\Repeater::make('checklistItems')
                     ->relationship()
