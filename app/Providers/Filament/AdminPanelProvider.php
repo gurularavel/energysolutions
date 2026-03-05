@@ -6,6 +6,7 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use App\Filament\Pages\Auth\Login;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -27,7 +28,7 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-            ->login()
+            ->login(Login::class)
             ->brandName('Energy Solutions')
             ->colors([
                 'primary' => Color::Amber,
@@ -58,7 +59,41 @@ class AdminPanelProvider extends PanelProvider
             ->renderHook('panels::head.end', fn (): HtmlString => new HtmlString(
                 '<link rel="stylesheet" href="' . asset('assets/css/flaticon.css') . '">' .
                 '<link rel="stylesheet" href="' . asset('assets/css/icomoon.css') . '">' .
-                '<link rel="stylesheet" href="' . asset('assets/css/font-awesome.min.css') . '">'
-            ));
+                '<link rel="stylesheet" href="' . asset('assets/css/font-awesome.min.css') . '">' .
+                (request()->routeIs('filament.admin.auth.login')
+                    ? '<script src="https://www.google.com/recaptcha/enterprise.js?render=' . config('services.recaptcha.site_key') . '" async defer></script>'
+                    : '')
+            ))
+            ->renderHook('panels::auth.login.form.after', fn (): HtmlString => new HtmlString('
+                <script>
+                    document.addEventListener("DOMContentLoaded", function () {
+                        function executeCaptcha() {
+                            if (typeof grecaptcha === "undefined" || typeof grecaptcha.enterprise === "undefined") {
+                                setTimeout(executeCaptcha, 300);
+                                return;
+                            }
+                            grecaptcha.enterprise.ready(function () {
+                                grecaptcha.enterprise.execute("' . config('services.recaptcha.site_key') . '", { action: "login" })
+                                    .then(function (token) {
+                                        Livewire.dispatch("captchaTokenReady", { token: token });
+                                    });
+                            });
+                        }
+                        executeCaptcha();
+
+                        // Refresh token every 90 seconds (token expires in 2 min)
+                        setInterval(function () {
+                            if (typeof grecaptcha !== "undefined" && typeof grecaptcha.enterprise !== "undefined") {
+                                grecaptcha.enterprise.ready(function () {
+                                    grecaptcha.enterprise.execute("' . config('services.recaptcha.site_key') . '", { action: "login" })
+                                        .then(function (token) {
+                                            Livewire.dispatch("captchaTokenReady", { token: token });
+                                        });
+                                });
+                            }
+                        }, 90000);
+                    });
+                </script>
+            '));
     }
 }

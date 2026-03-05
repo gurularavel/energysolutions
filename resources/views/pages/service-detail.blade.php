@@ -99,15 +99,13 @@
                     </div>
                     @endif
 
-                    @php $supportingImages = $service->supportingImages; @endphp
+                    @php $supportingImages = $service->getMedia('supporting_images'); @endphp
                     @if($supportingImages->isNotEmpty())
                     <div class="row">
                         @foreach($supportingImages->take(2) as $img)
                         <div class="col-xl-6">
                             <div class="img-box">
-                                @if($img->hasMedia('image'))
-                                    <img src="{{ $img->getFirstMediaUrl('image') }}" alt="{{ $img->alt_text }}" />
-                                @endif
+                                <img src="{{ $img->getUrl() }}" alt="{{ $img->name }}" />
                             </div>
                         </div>
                         @endforeach
@@ -131,9 +129,7 @@
                         @foreach($supportingImages->skip(2)->take(2) as $img)
                         <div class="col-xl-6">
                             <div class="img-box">
-                                @if($img->hasMedia('image'))
-                                    <img src="{{ $img->getFirstMediaUrl('image') }}" alt="{{ $img->alt_text }}" />
-                                @endif
+                                <img src="{{ $img->getUrl() }}" alt="{{ $img->name }}" />
                             </div>
                         </div>
                         @endforeach
