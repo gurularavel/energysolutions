@@ -81,23 +81,28 @@
                     </div>
 
                     @php
-                        $groups = $service->checklistItems
+                        $supportingByGroup = $service->supportingImages->groupBy('after_group');
+
+                        $checklistGroups = $service->checklistItems
                             ->filter(fn($i) => $i->section_group)
                             ->pluck('section_group')
-                            ->unique()
-                            ->sort()
-                            ->values();
+                            ->unique();
+
+                        $imageGroups = $service->supportingImages
+                            ->filter(fn($i) => $i->after_group)
+                            ->pluck('after_group')
+                            ->unique();
+
+                        // checklist + image qruplarını birləşdir, sırala
+                        $allGroups = $checklistGroups->merge($imageGroups)->unique()->sort()->values();
 
                         $ungroupedItems = $service->checklistItems
                             ->filter(fn($i) => !$i->section_group)
                             ->values();
-
-                        $supportingByGroup = $service->supportingImages
-                            ->groupBy('after_group');
                     @endphp
 
-                    @if($groups->isNotEmpty())
-                        @foreach($groups as $group)
+                    @if($allGroups->isNotEmpty())
+                        @foreach($allGroups as $group)
                             @php $groupItems = $service->checklistItems->where('section_group', $group)->values(); @endphp
                             @if($groupItems->isNotEmpty())
                             <div class="case-deatils-text-box">
