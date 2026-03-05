@@ -110,8 +110,8 @@
                             @endphp
 
                             @if($groupTitle && $groupTitle->title)
-                            <div class="text-box1">
-                                <h3>{{ $groupTitle->title }}</h3>
+                            <div class="text-box2">
+                                <h2>{{ $groupTitle->title }}</h2>
                             </div>
                             @endif
 
