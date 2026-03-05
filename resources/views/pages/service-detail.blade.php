@@ -132,7 +132,7 @@
                                         <div class="case-deatils-text-box">
                                             <ul>
                                                 @foreach($listBuffer as $li)
-                                                <li><span class="icon-check"></span> {{ $li->content }}</li>
+                                                <li><span class="icon-check"></span> {!! $li->content !!}</li>
                                                 @endforeach
                                             </ul>
                                         </div>
@@ -142,7 +142,7 @@
                                             <div class="col-xl-6">
                                                 <div class="case-deatils-text-box">
                                                     <ul>
-                                                        <li><span class="icon-check"></span> {{ $item->content }}</li>
+                                                        <li><span class="icon-check"></span> {!! $item->content !!}</li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -162,7 +162,7 @@
                                 <div class="case-deatils-text-box">
                                     <ul>
                                         @foreach($listBuffer as $li)
-                                        <li><span class="icon-check"></span> {{ $li->content }}</li>
+                                        <li><span class="icon-check"></span> {!! $li->content !!}</li>
                                         @endforeach
                                     </ul>
                                 </div>
@@ -192,7 +192,7 @@
                                 <div class="case-deatils-text-box">
                                     <ul>
                                         @foreach($listBuffer as $li)
-                                        <li><span class="icon-check"></span> {{ $li->content }}</li>
+                                        <li><span class="icon-check"></span> {!! $li->content !!}</li>
                                         @endforeach
                                     </ul>
                                 </div>
@@ -202,7 +202,7 @@
                                     <div class="col-xl-6">
                                         <div class="case-deatils-text-box">
                                             <ul>
-                                                <li><span class="icon-check"></span> {{ $item->content }}</li>
+                                                <li><span class="icon-check"></span> {!! $item->content !!}</li>
                                             </ul>
                                         </div>
                                     </div>
