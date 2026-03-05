@@ -99,10 +99,10 @@
                     </div>
                     @endif
 
-                    @php $supportingImages = $service->getMedia('supporting_images'); @endphp
-                    @if($supportingImages->isNotEmpty())
+                    @php $group1Images = $service->getMedia('group1_images'); @endphp
+                    @if($group1Images->isNotEmpty())
                     <div class="row">
-                        @foreach($supportingImages->take(2) as $img)
+                        @foreach($group1Images as $img)
                         <div class="col-xl-6">
                             <div class="img-box">
                                 <img src="{{ $img->getUrl() }}" alt="{{ $img->name }}" />
@@ -124,9 +124,10 @@
                     </div>
                     @endif
 
-                    @if($supportingImages->count() > 2)
+                    @php $group2Images = $service->getMedia('group2_images'); @endphp
+                    @if($group2Images->isNotEmpty())
                     <div class="row">
-                        @foreach($supportingImages->skip(2)->take(2) as $img)
+                        @foreach($group2Images as $img)
                         <div class="col-xl-6">
                             <div class="img-box">
                                 <img src="{{ $img->getUrl() }}" alt="{{ $img->name }}" />

@@ -67,16 +67,25 @@ class ServiceResource extends Resource
                     ->collection('breadcrumb_image')->image()->label('Breadcrumb Image'),
             ])->columns(3),
 
-            Forms\Components\Section::make('Supporting Images (Qruplar Arasında)')
-                ->description('Bu şəkillər xidmət səhifəsində checklist qrupları arasında göstərilir (2-li sütunlar şəklində).')
+            Forms\Components\Section::make('Qruplar Arasındakı Şəkillər')
+                ->description('Şəkillər xidmət səhifəsində checklist qruplarından sonra 2-li sütun şəklində göstərilir.')
                 ->schema([
-                    SpatieMediaLibraryFileUpload::make('supporting_images')
-                        ->collection('supporting_images')
+                    SpatieMediaLibraryFileUpload::make('group1_images')
+                        ->collection('group1_images')
                         ->image()
                         ->multiple()
                         ->reorderable()
-                        ->label('Şəkillər')
-                        ->helperText('Sürükleyerek sıralamaq mümkündür. Hər 2 şəkil bir sıra əmələ gətirir.')
+                        ->label('Group 1-dən sonra')
+                        ->helperText('Bu şəkillər 1-ci qrup siyahısının altında görünür.')
+                        ->columnSpanFull(),
+
+                    SpatieMediaLibraryFileUpload::make('group2_images')
+                        ->collection('group2_images')
+                        ->image()
+                        ->multiple()
+                        ->reorderable()
+                        ->label('Group 2-dən sonra')
+                        ->helperText('Bu şəkillər 2-ci qrup siyahısının altında görünür.')
                         ->columnSpanFull(),
                 ]),
 
