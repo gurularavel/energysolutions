@@ -15,6 +15,12 @@ Route::get('/storage-link', function () {
     return 'Storage linked successfully!';
 });
 
+// Optimize route (run after deployment to cache config/routes/views)
+Route::get('/optimize', function () {
+    \Illuminate\Support\Facades\Artisan::call('optimize');
+    return 'Optimized successfully!';
+});
+
 // Root → redirect to default locale
 Route::get('/', function () {
     $locale = SiteSetting::instance()->default_locale ?? 'az';
