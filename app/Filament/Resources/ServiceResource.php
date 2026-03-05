@@ -139,12 +139,15 @@ class ServiceResource extends Resource
                             Forms\Components\Tabs::make('Title')->tabs([
                                 Forms\Components\Tabs\Tab::make('AZ')->schema([
                                     Forms\Components\TextInput::make('title.az')->label('Başlıq (AZ)'),
+                                    Forms\Components\RichEditor::make('content.az')->label('Məzmun (AZ)')->columnSpanFull(),
                                 ]),
                                 Forms\Components\Tabs\Tab::make('RU')->schema([
                                     Forms\Components\TextInput::make('title.ru')->label('Başlıq (RU)'),
+                                    Forms\Components\RichEditor::make('content.ru')->label('Məzmun (RU)')->columnSpanFull(),
                                 ]),
                                 Forms\Components\Tabs\Tab::make('EN')->schema([
                                     Forms\Components\TextInput::make('title.en')->label('Başlıq (EN)'),
+                                    Forms\Components\RichEditor::make('content.en')->label('Məzmun (EN)')->columnSpanFull(),
                                 ]),
                             ])->columnSpan(2),
 

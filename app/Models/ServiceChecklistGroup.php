@@ -10,12 +10,13 @@ class ServiceChecklistGroup extends Model
 {
     use HasTranslations;
 
-    public array $translatable = ['title'];
+    public array $translatable = ['title', 'content'];
 
     protected $fillable = [
         'service_id',
         'group_key',
         'title',
+        'content',
         'sort_order',
     ];
 

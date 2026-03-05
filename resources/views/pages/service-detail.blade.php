@@ -114,6 +114,11 @@
                                 <h2>{{ $groupTitle->title }}</h2>
                             </div>
                             @endif
+                            @if($groupTitle && $groupTitle->content)
+                            <div class="case-deatils-text-box">
+                                {!! $groupTitle->content !!}
+                            </div>
+                            @endif
 
                             @if($groupItems->isNotEmpty())
                                 @php
