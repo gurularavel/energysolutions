@@ -222,7 +222,7 @@
                         <div class="case-deatils-text-box">
                             <ul>
                                 @foreach($listBuffer as $li)
-                                <li><span class="icon-check"></span> {{ $li->content }}</li>
+                                <li><span class="icon-check"></span> {!! $li->content !!}</li>
                                 @endforeach
                             </ul>
                         </div>
