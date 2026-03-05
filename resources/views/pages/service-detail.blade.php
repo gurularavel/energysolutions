@@ -252,10 +252,10 @@
             {{-- Accordion images: outside two-column layout, full-width (matches services6.html) --}}
             @foreach($service->accordionSections as $accordion)
                 @if($accordion->hasMedia('accordion_images'))
-                <div class="service-details-faq-content" style="width:100%;">
+                <div class="service-details-faq-content">
                     <div class="row">
                         @foreach($accordion->getMedia('accordion_images') as $img)
-                        <div class="col-xl-6" style="margin-bottom:20px;">
+                        <div class="col-xl-6">
                             <div class="img-box">
                                 <img src="{{ $img->getUrl() }}" alt="{{ $accordion->title }}" />
                             </div>
