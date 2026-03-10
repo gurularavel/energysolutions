@@ -28,10 +28,9 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
-    'recaptcha' => [
-        'site_key'            => env('RECAPTCHA_SITE_KEY'),
-        'enterprise_api_key'  => env('RECAPTCHA_ENTERPRISE_API_KEY'),
-        'project_id'          => env('RECAPTCHA_PROJECT_ID'),
+    'turnstile' => [
+        'site_key'   => env('TURNSTILE_SITE_KEY'),
+        'secret_key' => env('TURNSTILE_SECRET_KEY'),
     ],
 
     'slack' => [

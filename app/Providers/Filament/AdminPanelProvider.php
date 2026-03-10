@@ -61,38 +61,28 @@ class AdminPanelProvider extends PanelProvider
                 '<link rel="stylesheet" href="' . asset('assets/css/icomoon.css') . '">' .
                 '<link rel="stylesheet" href="' . asset('assets/css/font-awesome.min.css') . '">' .
                 (request()->routeIs('filament.admin.auth.login')
-                    ? '<script src="https://www.google.com/recaptcha/enterprise.js?render=' . config('services.recaptcha.site_key') . '" async defer></script>'
+                    ? '<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>'
                     : '')
             ))
             ->renderHook('panels::auth.login.form.after', fn (): HtmlString => new HtmlString('
+                <div style="margin-top: 1rem;">
+                    <div class="cf-turnstile"
+                         data-sitekey="' . config('services.turnstile.site_key') . '"
+                         data-callback="onTurnstileSuccess"
+                         data-expired-callback="onTurnstileExpired"
+                         data-error-callback="onTurnstileError">
+                    </div>
+                </div>
                 <script>
-                    document.addEventListener("DOMContentLoaded", function () {
-                        function executeCaptcha() {
-                            if (typeof grecaptcha === "undefined" || typeof grecaptcha.enterprise === "undefined") {
-                                setTimeout(executeCaptcha, 300);
-                                return;
-                            }
-                            grecaptcha.enterprise.ready(function () {
-                                grecaptcha.enterprise.execute("' . config('services.recaptcha.site_key') . '", { action: "login" })
-                                    .then(function (token) {
-                                        Livewire.dispatch("captchaTokenReady", { token: token });
-                                    });
-                            });
-                        }
-                        executeCaptcha();
-
-                        // Refresh token every 90 seconds (token expires in 2 min)
-                        setInterval(function () {
-                            if (typeof grecaptcha !== "undefined" && typeof grecaptcha.enterprise !== "undefined") {
-                                grecaptcha.enterprise.ready(function () {
-                                    grecaptcha.enterprise.execute("' . config('services.recaptcha.site_key') . '", { action: "login" })
-                                        .then(function (token) {
-                                            Livewire.dispatch("captchaTokenReady", { token: token });
-                                        });
-                                });
-                            }
-                        }, 90000);
-                    });
+                    function onTurnstileSuccess(token) {
+                        Livewire.dispatch("captchaTokenReady", { token: token });
+                    }
+                    function onTurnstileExpired() {
+                        Livewire.dispatch("captchaTokenReady", { token: "" });
+                    }
+                    function onTurnstileError() {
+                        Livewire.dispatch("captchaTokenReady", { token: "" });
+                    }
                 </script>
             '));
     }

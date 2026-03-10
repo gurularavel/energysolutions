@@ -40,33 +40,21 @@ class Login extends BaseLogin
     {
         if (empty($this->captchaToken)) {
             throw ValidationException::withMessages([
-                'data.email' => 'reCAPTCHA doğrulaması tamamlanmadı. Yenidən cəhd edin.',
+                'data.email' => 'Turnstile doğrulaması tamamlanmadı. Yenidən cəhd edin.',
             ]);
         }
 
-        $apiKey = config('services.recaptcha.enterprise_api_key');
-        $projectId = config('services.recaptcha.project_id');
+        $response = Http::asForm()->post('https://challenges.cloudflare.com/turnstile/v0/siteverify', [
+            'secret'   => config('services.turnstile.secret_key'),
+            'response' => $this->captchaToken,
+        ]);
 
-        if ($apiKey && $projectId) {
-            $response = Http::post(
-                "https://recaptchaenterprise.googleapis.com/v1/projects/{$projectId}/assessments?key={$apiKey}",
-                [
-                    'event' => [
-                        'token'          => $this->captchaToken,
-                        'siteKey'        => config('services.recaptcha.site_key'),
-                        'expectedAction' => 'login',
-                    ],
-                ]
-            );
+        $result = $response->json();
 
-            $result = $response->json();
-            $score  = $result['riskAnalysis']['score'] ?? 0;
-
-            if ($score < 0.5) {
-                throw ValidationException::withMessages([
-                    'data.email' => 'reCAPTCHA doğrulaması uğursuz oldu. Bot aktivliyi aşkarlandı.',
-                ]);
-            }
+        if (empty($result['success'])) {
+            throw ValidationException::withMessages([
+                'data.email' => 'Turnstile doğrulaması uğursuz oldu. Yenidən cəhd edin.',
+            ]);
         }
     }
 }
