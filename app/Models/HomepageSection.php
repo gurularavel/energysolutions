@@ -9,7 +9,7 @@ class HomepageSection extends Model
 {
     use HasTranslations;
 
-    public array $translatable = ['subtitle', 'content', 'button_text'];
+    public array $translatable = ['subtitle', 'content', 'button_text', 'page_content'];
 
     protected $fillable = [
         'section_key',
@@ -18,6 +18,7 @@ class HomepageSection extends Model
         'button_text',
         'button_link',
         'background_image',
+        'page_content',
     ];
 
     public static function getSection(string $key): ?self

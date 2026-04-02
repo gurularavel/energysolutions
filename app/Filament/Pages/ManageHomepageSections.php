@@ -44,23 +44,26 @@ class ManageHomepageSections extends Page
         }
     }
 
-    protected function getSectionForm(string $key): array
+    protected function getSectionForm(string $key, bool $withPageContent = false): array
     {
         return [
             Forms\Components\Hidden::make('section_key')->default($key),
             Forms\Components\Tabs::make('Content Translations')->tabs([
-                Forms\Components\Tabs\Tab::make('AZ')->schema([
+                Forms\Components\Tabs\Tab::make('AZ')->schema(array_filter([
                     Forms\Components\Textarea::make('content.az')->label('Content (AZ)')->rows(4)->columnSpanFull(),
                     Forms\Components\TextInput::make('button_text.az')->label('Button Text (AZ)'),
-                ]),
-                Forms\Components\Tabs\Tab::make('RU')->schema([
+                    $withPageContent ? Forms\Components\RichEditor::make('page_content.az')->label('Səhifə Mətni (AZ)')->columnSpanFull() : null,
+                ])),
+                Forms\Components\Tabs\Tab::make('RU')->schema(array_filter([
                     Forms\Components\Textarea::make('content.ru')->label('Content (RU)')->rows(4)->columnSpanFull(),
                     Forms\Components\TextInput::make('button_text.ru')->label('Button Text (RU)'),
-                ]),
-                Forms\Components\Tabs\Tab::make('EN')->schema([
+                    $withPageContent ? Forms\Components\RichEditor::make('page_content.ru')->label('Səhifə Mətni (RU)')->columnSpanFull() : null,
+                ])),
+                Forms\Components\Tabs\Tab::make('EN')->schema(array_filter([
                     Forms\Components\Textarea::make('content.en')->label('Content (EN)')->rows(4)->columnSpanFull(),
                     Forms\Components\TextInput::make('button_text.en')->label('Button Text (EN)'),
-                ]),
+                    $withPageContent ? Forms\Components\RichEditor::make('page_content.en')->label('Səhifə Mətni (EN)')->columnSpanFull() : null,
+                ])),
             ])->columnSpanFull(),
             Forms\Components\TextInput::make('button_link')->label('Button Link'),
         ];
@@ -75,7 +78,7 @@ class ManageHomepageSections extends Page
 
     public function aboutForm(Form $form): Form
     {
-        return $form->schema($this->getSectionForm('about'))->statePath('aboutData');
+        return $form->schema($this->getSectionForm('about', true))->statePath('aboutData');
     }
 
     public function slogan1Form(Form $form): Form
@@ -85,7 +88,7 @@ class ManageHomepageSections extends Page
 
     public function slogan2Form(Form $form): Form
     {
-        return $form->schema($this->getSectionForm('slogan2'))->statePath('slogan2Data');
+        return $form->schema($this->getSectionForm('slogan2', true))->statePath('slogan2Data');
     }
 
     public function certTextForm(Form $form): Form
@@ -121,7 +124,7 @@ class ManageHomepageSections extends Page
 
     public function futureServicesForm(Form $form): Form
     {
-        return $form->schema($this->getSectionForm('future_services'))->statePath('futureServicesData');
+        return $form->schema($this->getSectionForm('future_services', true))->statePath('futureServicesData');
     }
 
     public function save(string $key): void

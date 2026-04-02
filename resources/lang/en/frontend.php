@@ -31,9 +31,12 @@ return [
         'video_gallery'=> 'Video Gallery',
     ],
     'pages' => [
-        'photo_gallery' => 'Photo Gallery',
-        'certificates'  => 'Licenses & Certificates',
-        'video_gallery' => 'Video Gallery',
+        'photo_gallery'    => 'Photo Gallery',
+        'certificates'     => 'Licenses & Certificates',
+        'video_gallery'    => 'Video Gallery',
+        'about'            => 'About Us',
+        'lab_studies'      => 'Laboratory Studies',
+        'future_services'  => 'Future Services',
     ],
     'about' => [
         'services'     => 'Services',

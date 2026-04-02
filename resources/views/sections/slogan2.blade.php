@@ -10,7 +10,7 @@
                     <h2 class="paroller">{!! $slogan2->content ?? 'Ən yaxşı sınaq işlərini <span style="background-image: url(' . asset('assets/images/shape/zig-zag.png') . ');">və</span><br>laboratoriya tədqiqatlarını<br> təqdim edirik' !!}</h2>
                     @if($slogan2 && $slogan2->button_text)
                     <div class="slogan-btn-box paroller">
-                        <a class="btn-one" href="{{ $slogan2->button_link ?? '#' }}">
+                        <a class="btn-one" href="{{ ($slogan2->button_link && $slogan2->button_link !== '#') ? $slogan2->button_link : lroute('lab-studies.show') }}">
                             <span class="txt">{{ $slogan2->button_text }}</span>
                         </a>
                     </div>

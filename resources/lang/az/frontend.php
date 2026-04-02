@@ -31,9 +31,12 @@ return [
         'video_gallery'=> 'Video Qalereya',
     ],
     'pages' => [
-        'photo_gallery' => 'Foto Qalereya',
-        'certificates'  => 'Lisenziya və Sertifikatlar',
-        'video_gallery' => 'Video Qalereya',
+        'photo_gallery'    => 'Foto Qalereya',
+        'certificates'     => 'Lisenziya və Sertifikatlar',
+        'video_gallery'    => 'Video Qalereya',
+        'about'            => 'Haqqımızda',
+        'lab_studies'      => 'Laboratoriya Tədqiqatları',
+        'future_services'  => 'Gələcək Xidmətlər',
     ],
     'about' => [
         'services'     => 'Xidmətlər',

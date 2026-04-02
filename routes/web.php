@@ -5,6 +5,7 @@ use App\Http\Controllers\ExperimentController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\StaticPageController;
 use App\Http\Controllers\VideoGalleryController;
 use App\Models\SiteSetting;
 use Illuminate\Support\Facades\Route;
@@ -35,4 +36,7 @@ Route::prefix('{locale}')->middleware('setlocale')->group(function () {
     Route::get('/certificates', [CertificateController::class, 'index'])->name('certificates');
     Route::get('/proficiency-tests', [ExperimentController::class, 'show'])->name('experiment.show');
     Route::get('/video-gallery', [VideoGalleryController::class, 'index'])->name('video-gallery');
+    Route::get('/about', [StaticPageController::class, 'about'])->name('about.show');
+    Route::get('/lab-studies', [StaticPageController::class, 'labStudies'])->name('lab-studies.show');
+    Route::get('/future-services', [StaticPageController::class, 'futureServices'])->name('future-services.show');
 });

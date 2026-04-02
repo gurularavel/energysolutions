@@ -8,11 +8,11 @@
                     </div>
                     @if($futureServices && $futureServices->button_text)
                     <div class="button-box">
-                        <a class="btn-one" href="{{ $futureServices->button_link ?? '#' }}"><span class="txt">{{ $futureServices->button_text }}</span></a>
+                        <a class="btn-one" href="{{ ($futureServices->button_link && $futureServices->button_link !== '#') ? $futureServices->button_link : lroute('future-services.show') }}"><span class="txt">{{ $futureServices->button_text }}</span></a>
                     </div>
                     @else
                     <div class="button-box">
-                        <a class="btn-one" href="#"><span class="txt">{{ __('frontend.buttons.more') }}</span></a>
+                        <a class="btn-one" href="{{ lroute('future-services.show') }}"><span class="txt">{{ __('frontend.buttons.more') }}</span></a>
                     </div>
                     @endif
                 </div>

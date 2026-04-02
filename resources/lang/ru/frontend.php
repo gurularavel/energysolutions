@@ -31,9 +31,12 @@ return [
         'video_gallery'=> 'Видео Галерея',
     ],
     'pages' => [
-        'photo_gallery' => 'Фото Галерея',
-        'certificates'  => 'Лицензии и Сертификаты',
-        'video_gallery' => 'Видео Галерея',
+        'photo_gallery'    => 'Фото Галерея',
+        'certificates'     => 'Лицензии и Сертификаты',
+        'video_gallery'    => 'Видео Галерея',
+        'about'            => 'О нас',
+        'lab_studies'      => 'Лабораторные исследования',
+        'future_services'  => 'Будущие услуги',
     ],
     'about' => [
         'services'     => 'Услуги',

@@ -15,7 +15,7 @@
                     </div>
                     @if($about && $about->button_text)
                     <div class="btns-box">
-                        <a class="btn-one" href="{{ $about->button_link ?? '#' }}">
+                        <a class="btn-one" href="{{ ($about->button_link && $about->button_link !== '#') ? $about->button_link : lroute('about.show') }}">
                             <span class="txt">{{ $about->button_text }}<i class="icon-refresh arrow"></i></span>
                         </a>
                     </div>
